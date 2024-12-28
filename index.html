@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Викторина о животных</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background-color: #f7f7f7;
+        }
+
+        #smile {
+            font-size: 100px;
+            margin-top: 20px;
+        }
+
+        #response {
+            margin-top: 20px;
+            font-size: 20px;
+        }
+
+        #bouquet {
+            display: none;
+            margin-top: 20px;
+            width: 300px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Викторина о животных</h1>
+<div id="question"></div>
+<input type="text" id="userInput" placeholder="Ответьте 'да' или 'нет'" />
+<button onclick="checkAnswer()">Ответить</button>
+
+<div id="smile"></div>
+<div id="response"></div>
+<img id="bouquet" src="https://example.com/bouquet.jpg" alt="Букет" />
+
+<script>
+    const questions = [
+        "У вас есть домашние животные?",
+        "Вы любите собак?",
+        "Вы когда-нибудь виделись с тигром?",
+        "Вы предпочитаете кошек?",
+        "Вы знаете, что у дельфинов есть имена?"
+    ];
+    
+    let currentQuestion = 0;
+    let allYes = true; // Переменная для отслеживания, были ли все ответы "да"
+
+    function showQuestion() {
+        if (currentQuestion < questions.length) {
+            document.getElementById('question').innerText = questions[currentQuestion];
+            document.getElementById('userInput').value = '';
+            document.getElementById('smile').innerText = '';
+            document.getElementById('response').innerText = '';
+        } else {
+            if (allYes) {
+                document.getElementById('bouquet').style.display = 'block'; // Показываем букет, если все ответы "да"
+            } else {
+                document.getElementById('question').innerText = "Спасибо за участие в викторине!";
+            }
+            document.getElementById('userInput').style.display = 'none';
+            document.querySelector('button').style.display = 'none';
+        }
+    }
+
+    function checkAnswer() {
+        const input = document.getElementById('userInput').value.toLowerCase();
+        const smileDiv = document.getElementById('smile');
+        const responseDiv = document.getElementById('response');
+
+        if (input === 'да') {
+            smileDiv.innerText = '😊'; // Улыбающийся смайлик
+            responseDiv.innerText = 'Отлично! Ты настоящий любитель животных!';
+        } else {
+            smileDiv.innerText = '😢'; // Грустный смайлик
+            responseDiv.innerText = 'Не переживай, возможно, ты не сталкивался с этим!';
+            allYes = false; // Если хоть один ответ "нет", устанавливаем переменную в false
+        }
+
+        currentQuestion++;
+        setTimeout(showQuestion, 2000); // Показать следующий вопрос через 2 секунды
+    }
+
+    // Показать первый вопрос
+    showQuestion();
+</script>
+
+</body>
+</html>
